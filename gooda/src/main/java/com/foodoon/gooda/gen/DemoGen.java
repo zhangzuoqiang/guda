@@ -1,6 +1,6 @@
 package com.foodoon.gooda.gen;
 
-import com.foodoon.tool.common.StringTool;
+import com.foodoon.gooda.helper.GenHelper;
 
 import java.io.File;
 
@@ -18,9 +18,7 @@ public class DemoGen extends BaseDaoGen {
         if(tableName == null){
         	throw new RuntimeException("table name can not null");
         }
-
-
-		String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName))+"DO";
+        String domainName = GenHelper.getDomainName(tableName, appName);
 		setDomainObjectName(domainName);
 		setTableName(tableName);
 		setJavaDaoTargetPackage(parentPackageName + "." + appName + ".dao");
@@ -88,8 +86,7 @@ public class DemoGen extends BaseDaoGen {
 
 
     public static void genAll(String tableName,String appName,String parentPackageName){
-
-        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
+        String domainName = GenHelper.getDomainName(tableName, appName);
         try {
             System.out.println("start gen dao xml===================");
             GenContext genContext = new GenContext(parentPackageName + "." +appName+".dao.domain."+domainName,appName,parentPackageName);
@@ -119,7 +116,7 @@ public class DemoGen extends BaseDaoGen {
     }
 
 	public static void genDaoXML(String tableName,String appName,String parentPackageName){
-        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
+        String domainName = GenHelper.getDomainName(tableName, appName);
     	try {
 
             GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
@@ -132,8 +129,8 @@ public class DemoGen extends BaseDaoGen {
 	}
 	
 	public static void genBiz(String tableName,String appName,String parentPackageName){
-        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
-    	try {
+        String domainName = GenHelper.getDomainName(tableName, appName);
+        try {
             GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
 
             GenBiz genBiz = new GenBiz(genContext);
@@ -146,7 +143,7 @@ public class DemoGen extends BaseDaoGen {
 	}
 	
     public static void genAction(String tableName,String appName,String parentPackageName){
-        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
+        String domainName = GenHelper.getDomainName(tableName, appName);
     	try {
             GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
 
