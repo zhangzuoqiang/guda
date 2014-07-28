@@ -88,7 +88,8 @@ public class DemoGen extends BaseDaoGen {
 
 
     public static void genAll(String tableName,String appName,String parentPackageName){
-        String domainName = tableName.substring(0, 1).toUpperCase() + tableName.substring(1)+"DO";
+
+        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
         try {
             System.out.println("start gen dao xml===================");
             GenContext genContext = new GenContext(parentPackageName + "." +appName+".dao.domain."+domainName,appName,parentPackageName);
@@ -118,7 +119,7 @@ public class DemoGen extends BaseDaoGen {
     }
 
 	public static void genDaoXML(String tableName,String appName,String parentPackageName){
-    	String domainName = tableName.substring(0, 1).toUpperCase() + tableName.substring(1)+"DO";
+        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
     	try {
 
             GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
@@ -131,7 +132,7 @@ public class DemoGen extends BaseDaoGen {
 	}
 	
 	public static void genBiz(String tableName,String appName,String parentPackageName){
-		String domainName = tableName.substring(0, 1).toUpperCase() + tableName.substring(1)+"DO";
+        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
     	try {
             GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
 
@@ -145,7 +146,7 @@ public class DemoGen extends BaseDaoGen {
 	}
 	
     public static void genAction(String tableName,String appName,String parentPackageName){
-    	String domainName = tableName.substring(0, 1).toUpperCase() + tableName.substring(1)+"DO";
+        String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName)) +"DO";
     	try {
             GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
 
