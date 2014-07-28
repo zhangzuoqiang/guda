@@ -20,7 +20,7 @@ public class DemoGen extends BaseDaoGen {
         }
 
 
-		String domainName = StringTool.underLineStringToCamel(tableName)+"DO";
+		String domainName = StringTool.uppercaseFirstLetter(StringTool.underLineStringToCamel(tableName))+"DO";
 		setDomainObjectName(domainName);
 		setTableName(tableName);
 		setJavaDaoTargetPackage(parentPackageName + "." + appName + ".dao");
