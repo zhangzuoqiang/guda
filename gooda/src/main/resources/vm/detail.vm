@@ -1,0 +1,12 @@
+_!${doNameLower}详情
+  <table class="table">
+      #foreach($v in $doFieldList)
+          <tr>
+              <td>$v.cnName</td>
+              <td>
+                  _!${doNameLower}DO.$v.name
+              </td>
+          </tr>
+
+      #end
+  </table>
