@@ -1,7 +1,7 @@
 新增
 
 <form name="${doNameLower}Form" action="_!homeServer.getURI("${doNameLower}/doCreate.htm")" method="post">
-  <table>
+  <table class="table">
 #foreach($v in $doFieldList)
     _springBind("${doNameLower}Form.$v.name")
     <tr>

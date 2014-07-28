@@ -1,12 +1,14 @@
 <a  class="btn btn-default"  href="_!homeServer.getURI("${doNameLower}/create.htm")" >新建</a>
 
 <table  class="table">
+    <thead>
  <tr>
      #foreach($v in $doFieldList)
-         $v.cnName
+         <th>$v.cnName</th>
      #end
-     <td>操作</td>
+     <th>操作</th>
  </tr>
+    </thead>
 _foreach($f in $${doNameLower}DOList)
   <tr>
       #foreach($v in $doFieldList)
