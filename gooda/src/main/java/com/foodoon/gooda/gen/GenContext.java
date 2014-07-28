@@ -58,7 +58,7 @@ public class GenContext {
         if (!doName.endsWith("DO")) {
             throw new RuntimeException("do not end with DO");
         }
-        String packageDir = parentPackageName.replaceAll(".",File.separator);
+        String packageDir = parentPackageName.replaceAll("\\.",File.separator +File.separator);
         doName = doName.substring(0, doName.length() - 2);
         doNameLower = doName.substring(0, 1).toLowerCase() + doName.substring(1);
         bizFile = GenConstants.appDir + File.separator + getBizDir() + File.separator + GenConstants.javaDir + File.separator + packageDir
@@ -312,4 +312,6 @@ public class GenContext {
         }
         return null;
     }
+
+
 }
