@@ -23,5 +23,5 @@ public class GenConstants {
 
     public static String mybatisConfigXML = "sqlMapConfig.xml";
 
-    public static String parentPackage = "com" +File.separator + "foodoon";
+    //public static String parentPackage = "com" +File.separator + "foodoon";
 }

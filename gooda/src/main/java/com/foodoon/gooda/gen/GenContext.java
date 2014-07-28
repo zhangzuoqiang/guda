@@ -46,28 +46,29 @@ public class GenContext {
 
     private List<DOField> doFieldList = new ArrayList<DOField>();
 
-    public GenContext(String  clazz,String appName) throws ClassNotFoundException {
+    public GenContext(String  clazz,String appName,String parentPackageName) throws ClassNotFoundException {
 
-            this(Class.forName(clazz), appName);
+            this(Class.forName(clazz), appName,parentPackageName);
 
     }
 
-    public GenContext(Class clazz,String appName){
+    public GenContext(Class clazz,String appName,String parentPackageName){
         this.appName = appName;
         doName = clazz.getSimpleName();
         if (!doName.endsWith("DO")) {
             throw new RuntimeException("do not end with DO");
         }
+        String packageDir = parentPackageName.replaceAll(".",File.separator);
         doName = doName.substring(0, doName.length() - 2);
         doNameLower = doName.substring(0, 1).toLowerCase() + doName.substring(1);
-        bizFile = GenConstants.appDir + File.separator + getBizDir() + File.separator + GenConstants.javaDir + File.separator + GenConstants.parentPackage
+        bizFile = GenConstants.appDir + File.separator + getBizDir() + File.separator + GenConstants.javaDir + File.separator + packageDir
                 +File.separator + appName + File.separator + "biz" + File.separator + doName +"Biz.java";
-        bizImplFile = GenConstants.appDir + File.separator + getBizDir() + File.separator + GenConstants.javaDir + File.separator + GenConstants.parentPackage
+        bizImplFile = GenConstants.appDir + File.separator + getBizDir() + File.separator + GenConstants.javaDir + File.separator + packageDir
                 +File.separator + appName + File.separator + "biz" + File.separator + "impl"+File.separator+ doName +"BizImpl.java";
 
         bizXmlFile =  GenConstants.appDir + File.separator + getBizDir() + File.separator + GenConstants.resourceDir + File.separator + "spring" +File.separator + GenConstants.bizXML;
 
-        daoFile = GenConstants.appDir + File.separator + getDaoDir() + File.separator + GenConstants.javaDir + File.separator + GenConstants.parentPackage
+        daoFile = GenConstants.appDir + File.separator + getDaoDir() + File.separator + GenConstants.javaDir + File.separator + packageDir
                 +File.separator + appName + File.separator + "dao" + File.separator + doName +"DOMapper";
         dataSourceXmlFile = GenConstants.appDir + File.separator + getDaoDir() + File.separator + GenConstants.resourceDir + File.separator + "spring" +File.separator+ GenConstants.dataSourceXML;
 
@@ -77,12 +78,12 @@ public class GenContext {
         relativeDaoMapperXmlFile = "mybatis/"+doName+"DOMapper.xml";
 
         vmPath = GenConstants.baseDir + File.separator + "htdocs" + File.separator + "home" +File.separator + doNameLower;
-        controllerFile = GenConstants.appDir + File.separator + getWebDir() + File.separator + GenConstants.javaDir + File.separator + GenConstants.parentPackage
+        controllerFile = GenConstants.appDir + File.separator + getWebDir() + File.separator + GenConstants.javaDir + File.separator + packageDir
                 +File.separator + appName + File.separator + "web" + File.separator  + "action" + File.separator  + doName+"Action.java";
 
-        formFile = GenConstants.appDir + File.separator + getWebDir() + File.separator + GenConstants.javaDir + File.separator + GenConstants.parentPackage
+        formFile = GenConstants.appDir + File.separator + getWebDir() + File.separator + GenConstants.javaDir + File.separator +packageDir
                 +File.separator + appName + File.separator + "web" + File.separator  + "form" + File.separator  + doName+ "Form.java";
-        editFormFile = GenConstants.appDir + File.separator + getWebDir() + File.separator + GenConstants.javaDir + File.separator + GenConstants.parentPackage
+        editFormFile = GenConstants.appDir + File.separator + getWebDir() + File.separator + GenConstants.javaDir + File.separator + packageDir
                 +File.separator + appName + File.separator + "web" + File.separator  + "form" + File.separator  + doName+ "EditForm.java";
 
         System.out.println("appName:"+appName);

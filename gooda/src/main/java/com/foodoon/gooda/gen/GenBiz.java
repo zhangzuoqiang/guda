@@ -3,6 +3,7 @@ package com.foodoon.gooda.gen;
 import com.foodoon.gooda.velocity.VelocityHelper;
 import org.dom4j.Document;
 import org.dom4j.Element;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -23,8 +24,8 @@ public class GenBiz {
         this.genContext = genContext;
     }
 
-    public void gen() throws Exception {
-        genBizXml();
+    public void gen(String parentPackageName) throws Exception {
+        genBizXml(parentPackageName);
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("doName",genContext.getDoName());
         params.put("appName",genContext.getAppName());
@@ -55,19 +56,19 @@ public class GenBiz {
 
     }
 
-    public void genBizXml(){
+    public void genBizXml(String parentPackageName){
         String bizXML = genContext.getBizXmlFile();
         File file = new File(bizXML);
         if (!file.exists()) {
             Document document = SpringXml.createDocument();
             Element springXmlHeader = SpringXml.createSpringXmlHeader(document);
-            SpringXml.createBean(springXmlHeader, genContext.getDoNameLower() + "Biz", "com.foodoon." + genContext.getAppName() + ".biz.impl." + genContext.getDoName() + "BizImpl");
+            SpringXml.createBean(springXmlHeader, genContext.getDoNameLower() + "Biz", parentPackageName + "." + genContext.getAppName() + ".biz.impl." + genContext.getDoName() + "BizImpl");
             SpringXml.write(bizXML, document);
 
         }
         Document document = SpringXml.loadXML(bizXML);
         if (!SpringXml.hasBean(document, genContext.getDoNameLower() + "Biz")) {
-            SpringXml.createBean(SpringXml.getSpringRoot(document), genContext.getDoNameLower() + "Biz", "com.foodoon." + genContext.getAppName() + ".biz.impl." + genContext.getDoName() + "BizImpl");
+            SpringXml.createBean(SpringXml.getSpringRoot(document), genContext.getDoNameLower() + "Biz", parentPackageName + "." + genContext.getAppName() + ".biz.impl." + genContext.getDoName() + "BizImpl");
             SpringXml.write(bizXML, document);
         }
 

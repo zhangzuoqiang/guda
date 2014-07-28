@@ -3,7 +3,6 @@ package com.foodoon.gooda.gen;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
-import javax.swing.*;
 import java.io.File;
 
 /**
@@ -18,8 +17,8 @@ public class GenDAO {
     }
 
 
-    public void gen() {
-        createDAOXML();
+    public void gen(String parentPackageName) {
+        createDAOXML(parentPackageName);
         createMapConfig();
     }
 
@@ -44,7 +43,7 @@ public class GenDAO {
         return mapXml;
     }
 
-    public String createDAOXML() {
+    public String createDAOXML(String parentPackageName) {
         String dalXML = genContext.getDaoXmlFile();
         File file = new File(dalXML);
         if (!file.exists()) {
@@ -52,7 +51,7 @@ public class GenDAO {
             Element springXmlHeader = SpringXml.createSpringXmlHeader(document);
             Element mapper = SpringXml.createBean(springXmlHeader, genContext.getDoNameLower() + "DOMapper", "org.mybatis.spring.mapper.MapperFactoryBean");
             //com.foodoon.demo.dao.StaffDOMapper
-            SpringXml.appendVal(mapper, "mapperInterface", "com.foodoon." + genContext.getAppName() + ".dao." + genContext.getDoName() + "DOMapper");
+            SpringXml.appendVal(mapper, "mapperInterface", parentPackageName + "." + genContext.getAppName() + ".dao." + genContext.getDoName() + "DOMapper");
             SpringXml.appendRef(mapper, "sqlSessionFactory", "sqlSessionFactory");
             SpringXml.write(dalXML, document);
             return dalXML;
@@ -60,7 +59,7 @@ public class GenDAO {
         Document document = SpringXml.loadXML(dalXML);
         if (!SpringXml.hasBean(document, genContext.getDoNameLower() + "DOMapper")) {
             Element mapper = SpringXml.createBean(SpringXml.getSpringRoot(document), genContext.getDoNameLower() + "DOMapper", "org.mybatis.spring.mapper.MapperFactoryBean");
-            SpringXml.appendVal(mapper, "mapperInterface", "com.foodoon." + genContext.getAppName() + ".dao." + genContext.getDoName() + "DOMapper");
+            SpringXml.appendVal(mapper, "mapperInterface", parentPackageName + "." + genContext.getAppName() + ".dao." + genContext.getDoName() + "DOMapper");
             SpringXml.appendRef(mapper, "sqlSessionFactory", "sqlSessionFactory");
             SpringXml.write(dalXML, document);
         }
