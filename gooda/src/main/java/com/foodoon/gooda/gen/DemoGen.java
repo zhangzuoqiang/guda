@@ -1,5 +1,7 @@
 package com.foodoon.gooda.gen;
 
+import com.foodoon.tool.common.StringTool;
+
 import java.io.File;
 
 public class DemoGen extends BaseDaoGen {
@@ -18,14 +20,14 @@ public class DemoGen extends BaseDaoGen {
         }
 
 
-		String domainName = tableName.substring(0, 1).toUpperCase() + tableName.substring(1)+"DO";
+		String domainName = StringTool.underLineStringToCamel(tableName)+"DO";
 		setDomainObjectName(domainName);
 		setTableName(tableName);
-		setJavaDaoTargetPackage(parentPackageName + "."+appName+".dao");
+		setJavaDaoTargetPackage(parentPackageName + "." + appName + ".dao");
         String daoFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.javaDir ;
 		setJavaDaoTargetProject(daoFile);
 		
-		setJavaModelTargetPackage(parentPackageName + "."+appName+".dao.domain");
+		setJavaModelTargetPackage(parentPackageName + "." + appName + ".dao.domain");
 		setJavaModelTargetProject(daoFile);
 		
 		setSqlTargetPackage("mybatis");
@@ -41,6 +43,7 @@ public class DemoGen extends BaseDaoGen {
         
 
     }
+
 	
 	
     public String getJdbcPath() {
