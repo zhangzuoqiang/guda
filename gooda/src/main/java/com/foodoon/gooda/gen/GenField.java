@@ -12,11 +12,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface GenField {
 
+    boolean ignore() default false;
+
     String cn();
 
-    int order();
+    int order() default 0;
 
-    boolean inSearchForm();
+    boolean inSearchForm() default false;
 
-    boolean canNull();
+    boolean canNull() default false;
 }

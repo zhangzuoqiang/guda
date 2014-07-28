@@ -117,12 +117,15 @@ public class GenContext {
             dofield.upperName = name.substring(0, 1).toUpperCase() + name.substring(1);
             GenField annotation = field.getAnnotation(GenField.class);
             if(annotation !=null){
+                if(annotation.ignore()){
+                    continue;
+                }
                 dofield.cnName = annotation.cn();
                 dofield.inSearchForm = annotation.inSearchForm();
                 dofield.order = annotation.order();
                 dofield.canNull = annotation.canNull();
             }else{
-                dofield.cnName = name;
+                continue;
             }
             doFieldList.add(dofield);
 
