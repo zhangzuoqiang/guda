@@ -21,22 +21,22 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 
-public class PaginationPlugin extends PluginAdapter { 
-	
+public class PaginationPlugin extends PluginAdapter {
+
     private Logger log = Logger.getLogger(PaginationPlugin.class);
     public PaginationPlugin(){
-       
+
     }
-    @Override 
-    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, 
-            IntrospectedTable introspectedTable) { 
+    @Override
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
+                                              IntrospectedTable introspectedTable) {
         // add field, getter, setter for limit clause 
-        addLimit(topLevelClass, introspectedTable, "limitStart"); 
-        addLimit(topLevelClass, introspectedTable, "limitEnd"); 
-        return super.modelExampleClassGenerated(topLevelClass, 
-                introspectedTable); 
+        addLimit(topLevelClass, introspectedTable, "startRow");
+        addLimit(topLevelClass, introspectedTable, "pageSize");
+        return super.modelExampleClassGenerated(topLevelClass,
+                introspectedTable);
     }
-   
+
     private String getBlank(int deep){
         String s="";
         for(int i=0; i<deep; i++){
@@ -44,7 +44,7 @@ public class PaginationPlugin extends PluginAdapter {
         }
         return s;
     }
-   
+
     private void printElement(Element element,int deep){
         if(element instanceof XmlElement){
             XmlElement element2 = (XmlElement)element;
@@ -57,60 +57,60 @@ public class PaginationPlugin extends PluginAdapter {
         }else{
             log.info(getBlank(deep)+"Element Type:"+element.getClass().getSimpleName());
         }
-       
+
     }
-    @Override 
-    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated( 
-            XmlElement element, IntrospectedTable introspectedTable) { 
+    @Override
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
         XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$ 
-        isNotNullElement.addAttribute(new Attribute("test", "limitStart >= 0")); //$NON-NLS-1$ //$NON-NLS-2$ 
-        isNotNullElement.addElement(new TextElement("limit ${limitStart} , ${limitEnd}")); 
-       
+        isNotNullElement.addAttribute(new Attribute("test", "startRow >= 0")); //$NON-NLS-1$ //$NON-NLS-2$
+        isNotNullElement.addElement(new TextElement("limit ${startRow} , ${pageSize}"));
+
         element.addElement(isNotNullElement);
-        return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable); 
-    } 
-    private void addLimit(TopLevelClass topLevelClass, 
-            IntrospectedTable introspectedTable, String name) { 
-        CommentGenerator commentGenerator = context.getCommentGenerator(); 
-        Field field = new Field(); 
-        field.setVisibility(JavaVisibility.PROTECTED); 
-        field.setType(FullyQualifiedJavaType.getIntInstance()); 
-        field.setName(name); 
-        field.setInitializationString("-1"); 
-        commentGenerator.addFieldComment(field, introspectedTable); 
-        topLevelClass.addField(field); 
-        char c = name.charAt(0); 
-        String camel = Character.toUpperCase(c) + name.substring(1); 
-        Method method = new Method(); 
-        method.setVisibility(JavaVisibility.PUBLIC); 
-        method.setName("set" + camel); 
-        method.addParameter(new Parameter(FullyQualifiedJavaType 
-                .getIntInstance(), name)); 
-        method.addBodyLine("this." + name + "=" + name + ";"); 
-        commentGenerator.addGeneralMethodComment(method, introspectedTable); 
-        topLevelClass.addMethod(method); 
-        method = new Method(); 
-        method.setVisibility(JavaVisibility.PUBLIC); 
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance()); 
-        method.setName("get" + camel); 
-        method.addBodyLine("return " + name + ";"); 
-        commentGenerator.addGeneralMethodComment(method, introspectedTable); 
-        topLevelClass.addMethod(method); 
-    } 
+        return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
+    }
+    private void addLimit(TopLevelClass topLevelClass,
+                          IntrospectedTable introspectedTable, String name) {
+        CommentGenerator commentGenerator = context.getCommentGenerator();
+        Field field = new Field();
+        field.setVisibility(JavaVisibility.PROTECTED);
+        field.setType(FullyQualifiedJavaType.getIntInstance());
+        field.setName(name);
+        field.setInitializationString("-1");
+        commentGenerator.addFieldComment(field, introspectedTable);
+        topLevelClass.addField(field);
+        char c = name.charAt(0);
+        String camel = Character.toUpperCase(c) + name.substring(1);
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("set" + camel);
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getIntInstance(), name));
+        method.addBodyLine("this." + name + "=" + name + ";");
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setName("get" + camel);
+        method.addBodyLine("return " + name + ";");
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+    }
 
-    
-    public boolean validate(List<String> warnings) {  
-        return true;  
-    }  
-    public static void generate() {  
-        String config = PaginationPlugin.class.getClassLoader().getResource(  
-                "mybatisConfig.xml").getFile();  
-        String[] arg = { "-configfile", config, "-overwrite" };  
-        ShellRunner.main(arg);  
-    }  
-    public static void main(String[] args) {  
-        generate();  
-    }  
 
-  
+    public boolean validate(List<String> warnings) {
+        return true;
+    }
+    public static void generate() {
+        String config = PaginationPlugin.class.getClassLoader().getResource(
+                "mybatisConfig.xml").getFile();
+        String[] arg = { "-configfile", config, "-overwrite" };
+        ShellRunner.main(arg);
+    }
+    public static void main(String[] args) {
+        generate();
+    }
+
+
 }
