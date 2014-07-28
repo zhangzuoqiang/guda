@@ -17,24 +17,24 @@ public class DemoGen extends BaseDaoGen {
         	throw new RuntimeException("table name can not null");
         }
 
-		DemoGen demoGen = new DemoGen();
+
 		String domainName = tableName.substring(0, 1).toUpperCase() + tableName.substring(1)+"DO";
-		demoGen.setDomainObjectName(domainName);
-		demoGen.setTableName(tableName);
-		demoGen.setJavaDaoTargetPackage(parentPackageName + "."+appName+".dao");
+		setDomainObjectName(domainName);
+		setTableName(tableName);
+		setJavaDaoTargetPackage(parentPackageName + "."+appName+".dao");
         String daoFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.javaDir ;
-		demoGen.setJavaDaoTargetProject(daoFile);
+		setJavaDaoTargetProject(daoFile);
 		
-		demoGen.setJavaModelTargetPackage(parentPackageName + "."+appName+".dao.domain");
-		demoGen.setJavaModelTargetProject(daoFile);
+		setJavaModelTargetPackage(parentPackageName + "."+appName+".dao.domain");
+		setJavaModelTargetProject(daoFile);
 		
-		demoGen.setSqlTargetPackage("mybatis");
+		setSqlTargetPackage("mybatis");
 		String resourceFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.resourceDir ;
-		demoGen.setSqlTargetProject(resourceFile);
+		setSqlTargetProject(resourceFile);
 
       	
 		try {
-			demoGen.gen();
+			gen();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
