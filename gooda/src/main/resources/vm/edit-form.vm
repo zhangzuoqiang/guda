@@ -23,11 +23,11 @@ public class ${doName}EditForm extends ${doName}Form{
 
     public void initForm(${doName}DO ${doNameLower}DO){
         if(${doNameLower}DO == null){
-           return ;
-        }
-        #foreach($v in $doFieldList)
-        this.set${v.upperName}(${doNameLower}DO.get${v.upperName}());
-        #end
+        return ;
     }
+#foreach($v in $doFieldList)
+    this.set${v.upperName}(${doNameLower}DO.get${v.upperName}());
+#end
+}
 
 }
