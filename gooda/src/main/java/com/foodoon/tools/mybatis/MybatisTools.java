@@ -1,17 +1,7 @@
 package com.foodoon.tools.mybatis;
 
 import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.CommentGeneratorConfiguration;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
-import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.JavaTypeResolverConfiguration;
-import org.mybatis.generator.config.ModelType;
-import org.mybatis.generator.config.PluginConfiguration;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
-import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.config.*;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -136,6 +126,8 @@ public abstract class MybatisTools {
 			tableConfiguration.setDeleteByExampleStatementEnabled(false);
 
 			tableConfiguration.setUpdateByExampleStatementEnabled(false);
+            tableConfiguration.setGeneratedKey(new GeneratedKey("id", "SELECT LAST_INSERT_ID()",
+            true, null));
 			
 			//tableConfiguration.setSelectByExampleStatementEnabled(false);
 
