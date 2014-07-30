@@ -2,7 +2,7 @@ package com.foodoon.tools.web.page;
 
 public class BaseQuery {
 	
-    private int pageSize = 20;
+    private int pageSize = 10;
 
     private int startRow = 0;
 
