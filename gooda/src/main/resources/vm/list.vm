@@ -20,3 +20,5 @@ _foreach($f in $${doNameLower}DOList)
  </tr>
 _end
 </table>
+
+$tile.load('home/common/page.vm').param('query',$query).param('path','${doNameLower}/list.htm')
