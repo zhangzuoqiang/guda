@@ -50,13 +50,7 @@ public class GenVm {
         dirFile.mkdirs();
         String listFile = genContext.getVmPath() + File.separator + vm;
         String render =replace( VelocityHelper.render(vm, params));
-
         File file = new File(listFile);
-
-        if (file.exists()) {
-            listFile+=".c";
-        }
-        file = new File(listFile);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(render.getBytes("UTF-8"));
         fileOutputStream.close();

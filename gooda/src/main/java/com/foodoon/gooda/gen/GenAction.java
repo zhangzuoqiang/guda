@@ -34,7 +34,7 @@ public class GenAction {
         String controllerFile = genContext.getControllerFile();
         File file = new File(controllerFile);
         file.getParentFile().mkdirs();
-        
+
         file = new File(controllerFile);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(render.getBytes("UTF-8"));
