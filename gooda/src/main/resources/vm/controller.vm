@@ -36,6 +36,7 @@ public class ${doName}Action {
         BaseQuery baseQuery = new BaseQuery();
         baseQuery.setPageNo(pageId);
         baseQuery.setPageSize(pageSize);
+        modelMap.put("query",baseQuery);
         BizResult bizResult = ${doNameLower}Biz.list(baseQuery);
         if (bizResult.success) {
             modelMap.putAll(bizResult.data);
