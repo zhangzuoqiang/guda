@@ -20,8 +20,25 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>3.1.1.RELEASE</org.springframework.version>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
+</properties>
 
-	</properties>
+    <profiles>
+        <profile>
+            <id>aa</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>aa</id>
+                    <url>http://nongmao.info/nexus/content/repositories/dev</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 
 	<dependencies>
 
