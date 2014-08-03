@@ -16,7 +16,7 @@ public class BaseQuery {
 
     public void setPageSize(int pageSize) {
         if (pageSize <= 1) {
-            pageSize = 1;
+            pageSize = 10;
         }
         startRow = (pageNo - 1) * pageSize;
         this.pageSize = pageSize;
