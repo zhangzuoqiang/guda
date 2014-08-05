@@ -64,8 +64,8 @@ public class ${doName}BizImpl implements ${doName}Biz{
     public BizResult create(${doName}DO ${doNameLower}DO) {
         BizResult bizResult = new BizResult();
         try {
-            int id = ${doNameLower}DOMapper.insert(${doNameLower}DO);
-            bizResult.data.put("id", id);
+            int count = ${doNameLower}DOMapper.insert(${doNameLower}DO);
+            bizResult.data.put("count", count);
             bizResult.success = true;
         } catch (Exception e) {
             logger.error("create ${doName} error", e);
@@ -76,8 +76,8 @@ public class ${doName}BizImpl implements ${doName}Biz{
     public BizResult update(${doName}DO ${doNameLower}DO) {
         BizResult bizResult = new BizResult();
         try {
-            int id = ${doNameLower}DOMapper.updateByPrimaryKeySelective(${doNameLower}DO);
-            bizResult.data.put("id", id);
+            int count = ${doNameLower}DOMapper.updateByPrimaryKeySelective(${doNameLower}DO);
+            bizResult.data.put("count", count);
             bizResult.success = true;
         } catch (Exception e) {
             logger.error("update ${doName} error", e);
