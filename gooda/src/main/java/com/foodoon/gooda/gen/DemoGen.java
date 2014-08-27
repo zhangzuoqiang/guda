@@ -5,92 +5,103 @@ import com.foodoon.gooda.helper.GenHelper;
 import java.io.File;
 
 public class DemoGen extends BaseDaoGen {
-	
-	private String jdbcPath = "e:\\repo\\mysql\\mysql-connector-java\\5.1.9\\mysql-connector-java-5.1.9.jar";
-	
-	private String jdbUrl = "jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8";
-	
-	private String jdbcUsername = "root";
-	
-	private String jdbcPassword = "";
-	
-	public  void genDAO(String tableName,String appName,String parentPackageName){
-        if(tableName == null){
-        	throw new RuntimeException("table name can not null");
+
+    private String jdbcPath = "e:\\repo\\mysql\\mysql-connector-java\\5.1.9\\mysql-connector-java-5.1.9.jar";
+
+    private String jdbUrl = "jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8";
+
+    private String jdbcUsername = "root";
+
+    private String jdbcPassword = "";
+
+    public void genDAO(String tableName, String appName, String parentPackageName) {
+        if (tableName == null) {
+            throw new RuntimeException("table name can not null");
         }
         String domainName = GenHelper.getDomainName(tableName, appName);
-		setDomainObjectName(domainName);
-		setTableName(tableName);
-		setJavaDaoTargetPackage(parentPackageName + "." + appName + ".dao");
-        String daoFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.javaDir ;
-		setJavaDaoTargetProject(daoFile);
-		
-		setJavaModelTargetPackage(parentPackageName + "." + appName + ".dao.domain");
-		setJavaModelTargetProject(daoFile);
-		
-		setSqlTargetPackage("mybatis");
-		String resourceFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.resourceDir ;
-		setSqlTargetProject(resourceFile);
+        setDomainObjectName(domainName);
+        setTableName(tableName);
+        setJavaDaoTargetPackage(parentPackageName + "." + appName + ".dao");
+        String daoFile =
+                GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.javaDir;
+        setJavaDaoTargetProject(daoFile);
 
-      	
-		try {
-			gen();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        
+        setJavaModelTargetPackage(parentPackageName + "." + appName + ".dao.domain");
+        setJavaModelTargetProject(daoFile);
+
+        setSqlTargetPackage("mybatis");
+        String resourceFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator
+                + GenConstants.resourceDir;
+        setSqlTargetProject(resourceFile);
+
+        try {
+            gen();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-	
-	
-    public String getJdbcPath() {
-		return jdbcPath;
-	}
+    public void genDAO(String tableName, String appName, String parentPackageName, String targetRuntime) {
+        if (tableName == null) {
+            throw new RuntimeException("table name can not null");
+        }
+        setMybatisVersion(targetRuntime);
+        String domainName = GenHelper.getDomainName(tableName, appName);
+        setDomainObjectName(domainName);
+        setTableName(tableName);
+        setJavaDaoTargetPackage(parentPackageName + "." + appName + ".dao");
+        String daoFile =
+                GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator + GenConstants.javaDir;
+        setJavaDaoTargetProject(daoFile);
 
+        setJavaModelTargetPackage(parentPackageName + "." + appName + ".dao.domain");
+        setJavaModelTargetProject(daoFile);
 
-	public void setJdbcPath(String jdbcPath) {
-		this.jdbcPath = jdbcPath;
-	}
+        setSqlTargetPackage("mybatis");
+        String resourceFile = GenConstants.appDir + File.separator + GenContext.getDaoDir() + File.separator
+                + GenConstants.resourceDir;
+        setSqlTargetProject(resourceFile);
 
+        try {
+            gen();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	public String getJdbUrl() {
-		return jdbUrl;
-	}
+    }
 
+    public void setMybatisVersion(String targetRuntime1) {
+        setTargetRuntime(targetRuntime1);
+    }
 
-	public void setJdbUrl(String jdbUrl) {
+    public void setJdbcPath(String jdbcPath) {
+        setClasspathLocation(jdbcPath);
+    }
+
+    public void setDriverClass(String clazz) {
+        super.setDriverClass(clazz);
+    }
+
+    public void setJdbUrl(String jdbUrl) {
         super.setConnectionURL(jdbUrl);
-		this.jdbUrl = jdbUrl;
-	}
+    }
 
+    public void setJdbcUsername(String jdbcUsername) {
+        super.setUserId(jdbcUsername);
+    }
 
-	public String getJdbcUsername() {
-		return jdbcUsername;
-	}
+    public void setJdbcPassword(String jdbcPassword) {
+        super.setPassword(jdbcPassword);
+    }
 
-
-	public void setJdbcUsername(String jdbcUsername) {
-		this.jdbcUsername = jdbcUsername;
-	}
-
-
-	public String getJdbcPassword() {
-		return jdbcPassword;
-	}
-
-
-	public void setJdbcPassword(String jdbcPassword) {
-		this.jdbcPassword = jdbcPassword;
-	}
-
-
-    public static void genAll(String tableName,String appName,String parentPackageName){
+    public static void genAll(String tableName, String appName, String parentPackageName) {
         String domainName = GenHelper.getDomainName(tableName, appName);
         try {
             System.out.println("start gen dao xml===================");
-            GenContext genContext = new GenContext(parentPackageName + "." +appName+".dao.domain."+domainName,appName,parentPackageName);
-            GenDAO genDAO  = new GenDAO(genContext);
+            GenContext genContext = new GenContext(parentPackageName + "." + appName + ".dao.domain." + domainName,
+                    appName, parentPackageName);
+            GenDAO genDAO = new GenDAO(genContext);
             genDAO.gen(parentPackageName);
             System.out.println("start gen dao xml finish===================");
 
@@ -109,43 +120,44 @@ public class DemoGen extends BaseDaoGen {
             genVM.gen();
             System.out.println("start gen vm  finish===================");
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void genDaoXML(String tableName, String appName, String parentPackageName) {
+        String domainName = GenHelper.getDomainName(tableName, appName);
+        try {
+
+            GenContext genContext = new GenContext(parentPackageName + "." + appName + ".dao.domain." + domainName,
+                    appName, parentPackageName);
+            GenDAO genDAO = new GenDAO(genContext);
+            genDAO.gen(parentPackageName);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-	public static void genDaoXML(String tableName,String appName,String parentPackageName){
-        String domainName = GenHelper.getDomainName(tableName, appName);
-    	try {
-
-            GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
-            GenDAO genDAO  = new GenDAO(genContext);
-            genDAO.gen(parentPackageName);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-	}
-	
-	public static void genBiz(String tableName,String appName,String parentPackageName){
+    public static void genBiz(String tableName, String appName, String parentPackageName) {
         String domainName = GenHelper.getDomainName(tableName, appName);
         try {
-            GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
+            GenContext genContext = new GenContext(parentPackageName + "." + appName + ".dao.domain." + domainName,
+                    appName, parentPackageName);
 
             GenBiz genBiz = new GenBiz(genContext);
             genBiz.gen(parentPackageName);
 
-         
         } catch (Exception e) {
             e.printStackTrace();
         }
-	}
-	
-    public static void genAction(String tableName,String appName,String parentPackageName){
+    }
+
+    public static void genAction(String tableName, String appName, String parentPackageName) {
         String domainName = GenHelper.getDomainName(tableName, appName);
-    	try {
-            GenContext genContext = new GenContext(parentPackageName + "."+appName+".dao.domain."+domainName,appName,parentPackageName);
+        try {
+            GenContext genContext = new GenContext(parentPackageName + "." + appName + ".dao.domain." + domainName,
+                    appName, parentPackageName);
 
             GenAction genAction = new GenAction(genContext);
             genAction.gen();
@@ -155,7 +167,7 @@ public class DemoGen extends BaseDaoGen {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		
-	}
+
+    }
 
 }

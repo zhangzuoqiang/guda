@@ -45,6 +45,8 @@ public abstract class MybatisTools {
 
 	public String classpathLocation;
 
+    public String targetRuntime = targetRuntimeMybatis3;
+
 	public JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
 
 	public Context context;
@@ -59,13 +61,17 @@ public abstract class MybatisTools {
 
 	public TableConfiguration tableConfiguration;
 
+    public static final String targetRuntimeMybatis3 = "MyBatis3";
+
+    public static final String targetRuntimeIbatis = "Ibatis2Java5";
+
 	protected void gen() throws InvalidConfigurationException, IOException,
 			XMLParserException, SQLException, InterruptedException {
 
 		if (context == null) {
 			context = new Context(ModelType.FLAT);
 			context.setId("DB2Tables");
-			context.setTargetRuntime("MyBatis3");
+			context.setTargetRuntime(targetRuntime);
 		}
 
 		if (jdbcConnectionConfiguration == null) {
@@ -216,6 +222,10 @@ public abstract class MybatisTools {
 	public void setClasspathLocation(String classpathLocation) {
 		this.classpathLocation = classpathLocation;
 	}
+
+    public void setTargetRuntime(String targetRuntime){
+        this.targetRuntime = targetRuntime;
+    }
 
 	public void setJavaModelGeneratorConfiguration(
 			JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
