@@ -113,7 +113,11 @@ public abstract class MybatisTools {
 
 		if (javaClientGeneratorConfiguration == null) {
 			javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
-			javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
+            if(MybatisTools.targetRuntimeMybatis3.equals(targetRuntime)) {
+                javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
+            }else{
+                javaClientGeneratorConfiguration.setConfigurationType("SPRING");
+            }
 			javaClientGeneratorConfiguration
 					.setTargetPackage(javaDaoTargetPackage);
 			javaClientGeneratorConfiguration

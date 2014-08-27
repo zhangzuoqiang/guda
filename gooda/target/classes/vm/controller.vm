@@ -35,7 +35,7 @@ public class ${doName}Action {
         int pageSize = RequestUtil.getInt(request, "pageSize");
         BaseQuery baseQuery = new BaseQuery();
         baseQuery.setPageNo(pageId);
-        baseQuery.setPageSize(pageSize);
+        modelMap.put("query",baseQuery);
         BizResult bizResult = ${doNameLower}Biz.list(baseQuery);
         if (bizResult.success) {
             modelMap.putAll(bizResult.data);
@@ -81,7 +81,7 @@ public class ${doName}Action {
     }
 
     @RequestMapping(value = "${doNameLower}/doCreate.htm", method = RequestMethod.POST)
-    public String doCreate(HttpServletRequest request, ModelMap modelMap,@Valid ${doName}Form ${doNameLower}Form,
+    public String doCreate(HttpServletRequest request, ModelMap modelMap,@Valid  ${doName}Form ${doNameLower}Form,
         BindingResult result, Map<String,Object> model) {
         if (result.hasErrors()) {
             return "${doNameLower}/create.vm";
@@ -89,7 +89,7 @@ public class ${doName}Action {
         ${doName}DO ${doNameLower}DO = ${doNameLower}Form.toDO();
         BizResult bizResult = ${doNameLower}Biz.create(${doNameLower}DO);
         if (bizResult.success) {
-            return "redirect:/${doNameLower}/list.vm";
+            return "redirect:/${doNameLower}/list.htm";
         } else {
             return "common/error.vm";
         }
@@ -105,19 +105,19 @@ public class ${doName}Action {
         ${doName}DO ${doNameLower}DO = ${doNameLower}EditForm.toDO();
         BizResult bizResult = ${doNameLower}Biz.update(${doNameLower}DO);
         if (bizResult.success) {
-            return "redirect:/${doNameLower}/list.vm";
+            return "redirect:/${doNameLower}/list.htm";
         } else {
             return "common/error.vm";
         }
 
     }
 
-    @RequestMapping(value = "${doNameLower}/doDelete.htm", method = RequestMethod.POST)
+    @RequestMapping(value = "${doNameLower}/doDelete.htm")
     public String doDelete(HttpServletRequest request, ModelMap modelMap) {
         int id = RequestUtil.getInt(request, "id");
         BizResult bizResult = ${doNameLower}Biz.delete(id);
         if (bizResult.success) {
-            return "${doNameLower}/list.vm";
+            return "${doNameLower}/list.htm";
         } else {
             return "common/error.vm";
         }

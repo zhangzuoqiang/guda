@@ -1,7 +1,7 @@
 编辑
 
 <form name="${doNameLower}EditForm" action="_!homeServer.getURI("${doNameLower}/doUpdate.htm")" method="post">
-  <table>
+  <table class="table">
   _springBind("${doNameLower}EditForm.id")
   <input type="hidden" name="${status.expression}" value="_!status.value" />
       #foreach($v in $doFieldList)
@@ -9,14 +9,14 @@
           <tr>
               <td>$v.cnName</td>
               <td>
-                  <input type="text" name="${status.expression}" value="_!status.value" />
+                  <input class="form-control" type="text" name="${status.expression}" value="_!status.value" />
                   _foreach($error in $status.errorMessages) <b>$error</b>  _end
               </td>
           </tr>
       #end
 	  <tr>
 	  <td colspan="2">
-	  <input type="submit" value="提交"/></td>
+	  <input type="submit" class="btn" value="提交"/></td>
 	  </tr>
   </table>
 </form>
