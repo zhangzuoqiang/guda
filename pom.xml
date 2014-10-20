@@ -31,7 +31,7 @@
 	</build>
 
 	<modules>
-		<module>gooda</module>
+		<module>guda</module>
 		<module>archetype</module>
   </modules>
   
