@@ -158,7 +158,7 @@ public abstract class MybatisTools {
 		context.addPluginConfiguration(pluginConfiguration);
 		
 		PluginConfiguration pluginConfiguration2  = new PluginConfiguration ();
-		pluginConfiguration2.setConfigurationType("com.foodoon.tools.mybatis.PaginationPlugin");
+		pluginConfiguration2.setConfigurationType("guda.tools.mybatis.PaginationPlugin");
 		context.addPluginConfiguration(pluginConfiguration2);
 		
 		List<String> warnings = new ArrayList<String>();

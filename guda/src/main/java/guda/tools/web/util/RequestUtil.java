@@ -30,4 +30,9 @@ public class RequestUtil {
 		
 	}
 
+    public String getFullContextPath(HttpServletRequest request) {
+        String port = (80 == request.getServerPort()) ? "" : (":" + request.getServerPort());
+        return request.getScheme() + "://" + request.getServerName() + port + request.getContextPath();
+    }
+
 }

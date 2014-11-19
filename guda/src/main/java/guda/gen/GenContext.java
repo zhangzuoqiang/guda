@@ -145,6 +145,104 @@ public class GenContext {
         }
     }
 
+    public GenContext(String baseDir,String  clazz,String appName,String parentPackageName) throws ClassNotFoundException {
+
+        this(baseDir,Class.forName(clazz), appName,parentPackageName);
+
+    }
+    public GenContext(String baseDir,Class clazz,String appName,String parentPackageName){
+        this.appName = appName;
+        doName = clazz.getSimpleName();
+        if (!doName.endsWith("DO")) {
+            throw new RuntimeException("do not end with DO");
+        }
+        String packageDir = parentPackageName.replaceAll("\\.",File.separator +File.separator);
+        doName = doName.substring(0, doName.length() - 2);
+        doNameLower = doName.substring(0, 1).toLowerCase() + doName.substring(1);
+        bizFile = baseDir + File.separator + GenConstants.javaDir + File.separator + packageDir
+                +File.separator + appName + File.separator + "biz" + File.separator + doName +"Biz.java";
+        bizImplFile = baseDir + File.separator + GenConstants.javaDir + File.separator + packageDir
+                +File.separator + appName + File.separator + "biz" + File.separator + "impl"+File.separator+ doName +"BizImpl.java";
+
+        bizXmlFile =  baseDir + File.separator + GenConstants.resourceDir + File.separator + "spring" +File.separator + GenConstants.bizXML;
+
+        daoFile = baseDir + File.separator + GenConstants.javaDir + File.separator + packageDir
+                +File.separator + appName + File.separator + "dao" + File.separator + doName +"DOMapper";
+        dataSourceXmlFile = baseDir + File.separator + GenConstants.resourceDir + File.separator + "spring" +File.separator+ GenConstants.dataSourceXML;
+
+        daoXmlFile =  baseDir + File.separator + GenConstants.resourceDir + File.separator + "spring" +File.separator+ GenConstants.daoXML;
+        mybatisXmlFile  = baseDir + File.separator + GenConstants.resourceDir + File.separator + "mybatis" +File.separator+ GenConstants.mybatisConfigXML;
+
+        relativeDaoMapperXmlFile = "mybatis/"+doName+"DOMapper.xml";
+
+        vmPath = baseDir + File.separator + "htdocs" + File.separator + "home" +File.separator + doNameLower;
+        controllerFile = baseDir + File.separator + GenConstants.javaDir + File.separator + packageDir
+                +File.separator + appName + File.separator + "web" + File.separator  + "action" + File.separator  + doName+"Action.java";
+
+        formFile = baseDir + File.separator + GenConstants.javaDir + File.separator +packageDir
+                +File.separator + appName + File.separator + "web" + File.separator  + "form" + File.separator  + doName+ "Form.java";
+        editFormFile = baseDir + File.separator + GenConstants.javaDir + File.separator + packageDir
+                +File.separator + appName + File.separator + "web" + File.separator  + "form" + File.separator  + doName+ "EditForm.java";
+
+        System.out.println("appName:"+appName);
+        System.out.println("doNameLower:"+doNameLower);
+        System.out.println("bizFile:"+bizFile);
+        System.out.println("bizImplFile:"+bizImplFile);
+        System.out.println("bizXmlFile:"+bizXmlFile);
+        System.out.println("daoFile:"+daoFile);
+        System.out.println("dataSourceXmlFile:"+dataSourceXmlFile);
+        System.out.println("daoXmlFile:"+daoXmlFile);
+        System.out.println("mybatisXmlFile:"+mybatisXmlFile);
+        System.out.println("relativeDaoMapperXmlFile:"+relativeDaoMapperXmlFile);
+
+        System.out.println("controllerFile:"+controllerFile);
+        System.out.println("vmpath:"+vmPath);
+        System.out.println("formFile:"+formFile);
+        System.out.println("editFormFile:"+editFormFile);
+
+        Field[] fieldArray=clazz.getDeclaredFields();
+
+        for(Field field:fieldArray){
+            if("serialVersionUID".equals(field.getName())){
+                continue;
+            }
+            DOField dofield = new DOField();
+            String name = field.getName();
+            Class<?> type = field.getType();
+            dofield.name = name;
+            dofield.type = type;
+            dofield.typeName = type.getSimpleName();
+            dofield.upperName = name.substring(0, 1).toUpperCase() + name.substring(1);
+            GenField annotation = field.getAnnotation(GenField.class);
+            if(annotation !=null){
+                if(annotation.ignore()){
+                    continue;
+                }
+                dofield.cnName = annotation.cn();
+                dofield.inSearchForm = annotation.inSearchForm();
+                dofield.order = annotation.order();
+                dofield.canNull = annotation.canNull();
+            }else{
+                continue;
+            }
+            doFieldList.add(dofield);
+
+        }
+        Collections.sort(doFieldList,new Comparator<DOField>() {
+            public int compare(DOField o1, DOField o2) {
+                if(o1 == null || o2 == null)
+                    return 0;
+                if(o1.order>o2.order){
+                    return 1;
+                }
+                return -1;
+            }
+        });
+        for(DOField doField:doFieldList){
+            System.out.println(doField);
+        }
+    }
+
     public String getFormFile() {
         return formFile;
     }
@@ -302,10 +400,19 @@ public class GenContext {
         return null;
     }
 
+    public String getAppDir() {
+        File file = new File(GenConstants.appDir);
+        if (!file.exists()) {
+            return GenConstants.baseDir;
+        }
+
+        return null;
+    }
+
     public static String getDaoDir(){
         File file = new File(GenConstants.appDir);
         if (!file.exists()) {
-            throw new RuntimeException("app dir not exists");
+            return GenConstants.baseDir;
         }
         String[] list = file.list();
         for (String s : list) {
