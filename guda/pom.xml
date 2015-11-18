@@ -15,7 +15,6 @@
 	<name>guda</name>
 	<url>http://maven.apache.org</url>
 
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>3.1.1.RELEASE</org.springframework.version>
@@ -28,15 +27,6 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <repositories>
-                <repository>
-                    <id>aa</id>
-                    <url>http://nongmao.info/nexus/content/repositories/dev</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
         </profile>
     </profiles>
 
@@ -192,8 +182,6 @@
 			<version>1.3.2</version>
 		</dependency>
 
-
-
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -203,19 +191,19 @@
 
 		<!-- jetty -->
 		<dependency>
-			<groupId>jetty</groupId>
+			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty</artifactId>
 			<version>6.1.26</version>
 		</dependency>
 		<dependency>
-			<groupId>jetty</groupId>
+			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
 			<version>6.1.26</version>
 		</dependency>
 		<dependency>
-			<groupId>jetty</groupId>
+			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5-6.0.2</version>
+			<version>2.5.20110712</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.velocity</groupId>

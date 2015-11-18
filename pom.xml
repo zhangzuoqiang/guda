@@ -35,17 +35,4 @@
 		<module>archetype</module>
   </modules>
   
-    	<distributionManagement>
-	        <repository> 
-	            <id>dev</id> 
-	            <name>guangduo</name> 
-	            <url>http://nongmao.info/nexus/content/repositories/dev</url> 
-	        </repository> 
-	        <snapshotRepository> 
-	            <id>Snapshots</id> 
-	            <name>guangduo</name> 
-	            <url>http://nongmao.info/nexus/content/repositories/snapshots</url> 
-	            <uniqueVersion>false</uniqueVersion> 
-	        </snapshotRepository>
-	  </distributionManagement>	
 </project>
